@@ -14,7 +14,7 @@ public sealed partial class LoginController : ControllerBase
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<ApiResponse>> Login(UserLoginDto dto)
+    public async Task<ActionResult<ApiResponse<string>>> Login(UserLoginDto dto)
     {
         await using var ctx = await dbContextFactory.CreateDbContextAsync().ConfigureAwait(false);
         var user = await ctx.Users
