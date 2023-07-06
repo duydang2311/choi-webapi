@@ -17,7 +17,8 @@ builder.Services
             Description = "An ASP.NET Core Web API for Choi. app",
         });
     })
-    .AddDatabase();
+    .AddDatabase()
+    .AddChoiServices();
 
 var app = builder.Build();
 
