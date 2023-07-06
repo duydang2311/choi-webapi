@@ -1,4 +1,5 @@
 using AgileObjects.AgileMapper.Extensions;
+using Choi.WebApi.Data;
 using Choi.WebApi.Dtos;
 using Choi.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +17,7 @@ public sealed partial class UserController : ControllerBase
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    public async Task<ActionResult<UserResponseDto>> AddUser(UserPostRequestDto dto)
+    public async Task<ActionResult<ApiResponse<UserResponseDto>>> AddUser(UserPostRequestDto dto)
     {
         await using var ctx = await dbContextFactory.CreateDbContextAsync().ConfigureAwait(false);
 
@@ -25,6 +26,6 @@ public sealed partial class UserController : ControllerBase
         ctx.Add(user);
         await ctx.SaveChangesAsync().ConfigureAwait(false);
 
-        return CreatedAtAction(nameof(AddUser), new { id = user.Id }, user.Map().ToANew<UserResponseDto>());
+        return CreatedAtAction(nameof(AddUser), new { id = user.Id }, apiResponder.Data(user.Map().ToANew<UserResponseDto>()));
     }
 }
